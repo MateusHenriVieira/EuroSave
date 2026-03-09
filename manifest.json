@@ -1,0 +1,71 @@
+{
+  "manifest_version": 3,
+  "name": "EuroSave",
+  "version": "1.0.0",
+  "description": "Smart cross-border price arbitrage for Amazon EU.",
+  "icons": {
+    "16": "public/vite.svg",
+    "48": "public/vite.svg",
+    "128": "public/vite.svg"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "EuroSave - Check Savings"
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://www.amazon.de/dp/*",
+    "https://www.amazon.de/*/dp/*",
+    "https://www.amazon.es/dp/*",
+    "https://www.amazon.es/*/dp/*",
+    "https://www.amazon.fr/dp/*",
+    "https://www.amazon.fr/*/dp/*",
+    "https://www.amazon.it/dp/*",
+    "https://www.amazon.it/*/dp/*",
+    "https://www.amazon.nl/dp/*",
+    "https://www.amazon.nl/*/dp/*"
+  ],
+  "background": {
+    "service_worker": "src/background/index.ts",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": ["src/content/index.tsx"],
+      "matches": [
+        "https://www.amazon.de/dp/*",
+        "https://www.amazon.de/*/dp/*",
+        "https://www.amazon.es/dp/*",
+        "https://www.amazon.es/*/dp/*",
+        "https://www.amazon.fr/dp/*",
+        "https://www.amazon.fr/*/dp/*",
+        "https://www.amazon.it/dp/*",
+        "https://www.amazon.it/*/dp/*",
+        "https://www.amazon.nl/dp/*",
+        "https://www.amazon.nl/*/dp/*"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' http://localhost:5173; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "src/content/content.css"
+      ],
+      "matches": [
+        "*://www.amazon.de/*",
+        "*://www.amazon.es/*",
+        "*://www.amazon.fr/*",
+        "*://www.amazon.it/*",
+        "*://www.amazon.nl/*"
+      ]
+    }
+  ]
+}

@@ -1,46 +1,73 @@
-# EuroSave
+# React + TypeScript + Vite
 
-> **The European Single Market is united. Your prices should be too.**
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Depois de navegar por centenas de produtos na Amazon, percebi que o "Mercado Único" não é tão único assim. O mesmo item pode custar 30% a menos se você simplesmente atravessar a fronteira (digitalmente).
+Currently, two official plugins are available:
 
-O **EuroSave** nasceu para acabar com o "imposto de localização" que as grandes varejistas impõem silenciosamente.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
----
+## React Compiler
 
-## 🚀 O Problema
-Atualmente, para economizar na Europa, você precisa:
-1. Abrir 5 abas diferentes (.de, .fr, .es, .it, .nl).
-2. Traduzir termos de busca.
-3. Calcular o frete transfronteiriço manualmente.
-4. Perder 20 minutos para economizar €15.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-**Ninguém tem tempo para isso.**
+## Expanding the ESLint configuration
 
-## ✨ A Solução: EuroSave
-Uma extensão de navegador ultra-leve que faz o trabalho sujo por você.
-- **Zero Atrito:** Detecta o produto automaticamente enquanto você navega.
-- **Transparência Real:** Compara Preço + Frete estimado em tempo real.
-- **ROI Instantâneo:** Se paga (e dá lucro) logo na primeira compra.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## 🛠 Tech Stack
-- **Framework:** [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
-- **Language:** [TypeScript](https://www.typescriptlang.org/) (Safety first for prices)
-- **Manifest:** V3 (Chrome, Edge, Brave)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
----
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## 📈 Roadmap & Build in Public
-- [ ] **Phase 1:** Amazon EU Cross-border matching (MVP)
-- [ ] **Phase 2:** Real-time shipping calculation engine
-- [ ] **Phase 3:** Price history & "Best moment to buy" alerts
-- [ ] **Phase 4:** Expanding to Allegro, Bol.com and Otto.
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
----
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## 🤝 Contributing
-Este projeto está sendo desenvolvido no modelo **Build in Public**. Sinta-se à vontade para abrir Issues ou sugerir melhorias na lógica de scraping e localização.
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
----
-*Built with ❤️ for the European community.*
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```

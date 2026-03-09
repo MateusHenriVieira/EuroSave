@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+/* CSS customizado para garantir que o Amazon não quebre nosso layout */
+#eurosave-root {
+  all: initial; /* Reseta os estilos herdados da Amazon */
+  display: block;
+  font-family: 'Inter', sans-serif;
+  margin: 1rem 0;
+}
+
+#eurosave-root * {
+  box-sizing: border-box;
+}
