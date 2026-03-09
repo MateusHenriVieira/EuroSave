@@ -1,4 +1,4 @@
-# 🇪🇺 EuroSave
+# EuroSave
 
 > **The European Single Market is united. Your prices should be too.**
 
